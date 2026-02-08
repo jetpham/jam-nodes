@@ -1,4 +1,5 @@
 import type { z } from 'zod';
+import type { NodeServices } from './services';
 
 /**
  * Base execution context passed to all node executors.
@@ -15,6 +16,8 @@ export interface NodeExecutionContext {
   variables: Record<string, unknown>;
   /** Resolve nested path like "contact.email" or "data[0].name" */
   resolveNestedPath: (path: string) => unknown;
+  /** Optional services injected by host application */
+  services?: NodeServices;
 }
 
 /**

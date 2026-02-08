@@ -14,3 +14,21 @@ export type {
   NodeNotificationConfig,
   BaseNodeConfig,
 } from './config.js';
+
+export type {
+  NodeServices,
+  ApolloClient,
+  ApolloContact,
+  DataForSeoClient,
+  DataForSeoAuditResult,
+  DataForSeoKeyword,
+  TwitterClient,
+  TwitterPost,
+  ForumScoutClient,
+  LinkedInPost,
+  OpenAIClient,
+  AnthropicClient,
+  NotificationService,
+  StorageService,
+  CacheService,
+} from './services.js';

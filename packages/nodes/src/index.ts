@@ -57,6 +57,84 @@ export type {
   HttpMethod,
 } from './examples/index.js';
 
+// Integration nodes
+export {
+  // Social
+  redditMonitorNode,
+  RedditMonitorInputSchema,
+  RedditMonitorOutputSchema,
+  twitterMonitorNode,
+  TwitterMonitorInputSchema,
+  TwitterMonitorOutputSchema,
+  linkedinMonitorNode,
+  LinkedInMonitorInputSchema,
+  LinkedInMonitorOutputSchema,
+  // OpenAI
+  soraVideoNode,
+  SoraVideoInputSchema,
+  SoraVideoOutputSchema,
+  // DataForSEO
+  seoKeywordResearchNode,
+  SeoKeywordResearchInputSchema,
+  SeoKeywordResearchOutputSchema,
+  seoAuditNode,
+  SeoAuditInputSchema,
+  SeoAuditOutputSchema,
+  // Apollo
+  searchContactsNode,
+  SearchContactsInputSchema,
+  SearchContactsOutputSchema,
+} from './integrations/index.js';
+
+export type {
+  RedditMonitorInput,
+  RedditMonitorOutput,
+  RedditPost,
+  TwitterMonitorInput,
+  TwitterMonitorOutput,
+  TwitterPost,
+  LinkedInMonitorInput,
+  LinkedInMonitorOutput,
+  LinkedInPost,
+  SoraVideoInput,
+  SoraVideoOutput,
+  SeoKeywordResearchInput,
+  SeoKeywordResearchOutput,
+  SeoAuditInput,
+  SeoAuditOutput,
+  SeoIssue,
+  SearchContactsInput,
+  SearchContactsOutput,
+} from './integrations/index.js';
+
+// AI nodes
+export {
+  socialKeywordGeneratorNode,
+  SocialKeywordGeneratorInputSchema,
+  SocialKeywordGeneratorOutputSchema,
+  draftEmailsNode,
+  DraftEmailsInputSchema,
+  DraftEmailsOutputSchema,
+  DraftEmailInfoSchema,
+  ContactSchema,
+  socialAiAnalyzeNode,
+  SocialAiAnalyzeInputSchema,
+  SocialAiAnalyzeOutputSchema,
+} from './ai/index.js';
+
+export type {
+  SocialKeywordGeneratorInput,
+  SocialKeywordGeneratorOutput,
+  DraftEmailsInput,
+  DraftEmailsOutput,
+  DraftEmailInfo,
+  Contact,
+  SocialAiAnalyzeInput,
+  SocialAiAnalyzeOutput,
+  SocialPost,
+  AnalyzedPost,
+} from './ai/index.js';
+
 // All nodes as a collection
 import { conditionalNode } from './logic/index.js';
 import { endNode } from './logic/index.js';
@@ -64,15 +142,44 @@ import { delayNode } from './logic/index.js';
 import { mapNode } from './transform/index.js';
 import { filterNode } from './transform/index.js';
 import { httpRequestNode } from './examples/index.js';
+import {
+  redditMonitorNode,
+  twitterMonitorNode,
+  linkedinMonitorNode,
+  soraVideoNode,
+  seoKeywordResearchNode,
+  seoAuditNode,
+  searchContactsNode,
+} from './integrations/index.js';
+import {
+  socialKeywordGeneratorNode,
+  draftEmailsNode,
+  socialAiAnalyzeNode,
+} from './ai/index.js';
 
 /**
  * All built-in nodes as an array for easy registration
  */
 export const builtInNodes = [
+  // Logic
   conditionalNode,
   endNode,
   delayNode,
+  // Transform
   mapNode,
   filterNode,
+  // Examples
   httpRequestNode,
+  // Integrations
+  redditMonitorNode,
+  twitterMonitorNode,
+  linkedinMonitorNode,
+  soraVideoNode,
+  seoKeywordResearchNode,
+  seoAuditNode,
+  searchContactsNode,
+  // AI
+  socialKeywordGeneratorNode,
+  draftEmailsNode,
+  socialAiAnalyzeNode,
 ];
