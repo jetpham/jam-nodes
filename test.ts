@@ -4,7 +4,7 @@
  */
 
 import { NodeRegistry, ExecutionContext, defineNode } from './packages/core/src/index';
-import { conditionalNode, endNode, delayNode, mapNode, filterNode, httpRequestNode, builtInNodes } from './packages/nodes/src/index';
+import { conditionalNode, endNode, delayNode, mapNode, filterNode, httpRequestNode, builtInNodes, createRetryNode } from './packages/nodes/src/index';
 import { z } from 'zod';
 
 async function test() {
@@ -98,7 +98,42 @@ async function test() {
   // Test 7: Execute custom greet node
   const greetExecutor = registry.getExecutor('greet')!;
   const greetResult = await greetExecutor({ name: 'World' }, nodeCtx);
-  console.log(`✓ Custom node: ${greetResult.output?.message}`);
+  if (greetResult.success && greetResult.output && typeof greetResult.output === 'object' && 'message' in greetResult.output) {
+    console.log(`✓ Custom node: ${greetResult.output.message}`);
+  }
+
+  // Test 8: Retry Node wrapper
+  console.log('=== Testing Retry Node ===\n');
+  
+  let attempts = 0;
+  const failingNode = defineNode({
+    type: 'failing',
+    name: 'Failing Node',
+    description: 'Fails exactly twice before succeeding',
+    category: 'action',
+    inputSchema: z.object({ value: z.string() }),
+    outputSchema: z.object({ msg: z.string() }),
+    executor: async (input) => {
+      attempts++;
+      if (attempts < 3) {
+        return { success: false, error: `Simulated failure on attempt ${attempts}` };
+      }
+      return { success: true, output: { msg: `Success with ${input.value}` } };
+    }
+  });
+
+  const resilientNode = createRetryNode(failingNode);
+  registry.register(resilientNode);
+  
+  const testRetryResult = await resilientNode.executor({
+    value: 'test-data',
+    maxRetries: 3,
+    initialDelayMs: 10,
+    maxDelayMs: 50,
+    backoffMultiplier: 2,
+  }, nodeCtx);
+
+  console.log(`✓ Retry node: success=${testRetryResult.success}, output=${JSON.stringify(testRetryResult.output)}\n`);
 
   console.log('\n=== All tests passed! ===');
 }

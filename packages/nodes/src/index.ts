@@ -11,6 +11,8 @@ export {
   EndOutputSchema,
   DelayInputSchema,
   DelayOutputSchema,
+  RetryConfigSchema,
+  RetryMetadataSchema,
 } from './logic/index.js';
 
 export type {
@@ -22,6 +24,8 @@ export type {
   EndOutput,
   DelayInput,
   DelayOutput,
+  RetryConfig,
+  RetryMetadata,
 } from './logic/index.js';
 
 // Transform nodes
@@ -139,6 +143,7 @@ export type {
 import { conditionalNode } from './logic/index.js';
 import { endNode } from './logic/index.js';
 import { delayNode } from './logic/index.js';
+import { createRetryNode } from './logic/index.js';
 import { mapNode } from './transform/index.js';
 import { filterNode } from './transform/index.js';
 import { httpRequestNode } from './examples/index.js';
@@ -157,10 +162,14 @@ import {
   socialAiAnalyzeNode,
 } from './ai/index.js';
 
+export { createRetryNode };
+
+import type { NodeDefinition } from '@jam-nodes/core';
+
 /**
  * All built-in nodes as an array for easy registration
  */
-export const builtInNodes = [
+export const builtInNodes: NodeDefinition<any, any>[] = [
   // Logic
   conditionalNode,
   endNode,
